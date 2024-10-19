@@ -26,6 +26,12 @@
         font-weight: 700;
         src: url("./fonts/GeneralSans-Bold.otf") format("otf");
     }
+
+    @font-face {
+        font-family: GeneralSans;
+        font-weight: 200;
+        src: url("./fonts/GeneralSans-Light.otf") format("otf");
+    }
 }
 
 body {
