@@ -7,7 +7,6 @@ import os
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-
 @app.route('/upload_file', methods=['POST'])
 def upload_file_route():
     try:
