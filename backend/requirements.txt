@@ -1,0 +1,3 @@
+hashlib
+singlestoredb
+python-dotenv
