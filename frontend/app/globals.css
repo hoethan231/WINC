@@ -27,3 +27,8 @@
         src: url("./fonts/GeneralSans-Bold.otf") format("otf");
     }
 }
+
+body {
+    @apply font-sans;
+    font-family: "GeneralSans", sans-serif;
+}
