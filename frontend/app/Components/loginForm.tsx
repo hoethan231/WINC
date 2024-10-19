@@ -4,7 +4,7 @@ import { Label } from "./label";
 import { Input } from "./input";
 import { cn } from "@/app/lib/utils";
 
-export function LoginForm() {
+export function LoginForm({setUserID}: {setUserID: (id: string) => void}) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted");

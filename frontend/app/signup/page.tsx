@@ -2,7 +2,7 @@ import { SignupForm } from "../Components/signupForm"
 import { LoginForm } from "../Components/loginForm"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../Components/tabs";
 
-export default function signupPage() {
+export default function signupPage({setUserID}: {setUserID: (id: string) => void}) {
     return (
         <div className="flex min-h-screen">
             <div className="w-1/2 flex justify-center items-center">
@@ -12,7 +12,7 @@ export default function signupPage() {
                     <TabsTrigger value="logIn">Log In</TabsTrigger>
                 </TabsList>
                 <TabsContent value="signUp"><SignupForm /></TabsContent>
-                <TabsContent value="logIn"><LoginForm></LoginForm></TabsContent>
+                <TabsContent value="logIn"><LoginForm setUserID={setUserID}></LoginForm></TabsContent>
             </Tabs>
             </div>
             <div className="w-1/2 bg-blurBackground bg-[#87ADDC] bg-cover bg-center flex justify-center items-center text-white text-6xl">

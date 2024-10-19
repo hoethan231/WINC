@@ -14,5 +14,12 @@ def upload_file_route():
     print(file)
     return "success", 200
 
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    if db.user_exist(data['username'], data['password']):
+        return "success", 200
+    return "failed", 401
+
 if __name__ == '__main__':
     app.run(debug=True)
