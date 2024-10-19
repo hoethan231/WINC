@@ -23,9 +23,8 @@ def crop_image(img):
     # Create the image segmenter
     with vision.ImageSegmenter.create_from_options(options) as segmenter:
         # Create the MediaPipe image file that will be segmented
-        image = Image.open(img.stream)
+        image = Image.open(img)
         image = mp.Image(image_format=mp.ImageFormat.SRGB, data=np.array(image))
-        image.show
 
         # Retrieve the masks for the segmented image
         segmentation_result = segmenter.segment(image)
