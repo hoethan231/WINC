@@ -2,7 +2,7 @@ import { SignupForm } from "../Components/signupForm"
 import { LoginForm } from "../Components/loginForm"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../Components/tabs";
 
-export default function signupPage() {
+export default function signupPage({setUserID}: {setUserID: (id: string) => void}) {
     return (
         <div className="flex min-h-screen">
             <div className="w-1/2 flex justify-center items-center">

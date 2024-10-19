@@ -6,13 +6,13 @@ import os
 
 load_dotenv()
 
-def create_user(username, password, email):
+def create_user(first, last, username, password, email):
     try:
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
             password = hashlib.sha256(password.encode()).hexdigest()
-            cur.execute("INSERT INTO users (username, pass, email) VALUES (%s, %s, %s)", 
-                        (username, password, email))
+            cur.execute("INSERT INTO users (firstName, lastName, username, pass, email) VALUES (%s, %s, %s, %s, %s)", 
+                        (first, last, username, password, email))
     except Exception as e:
         print("Error: ", e)
 
@@ -24,13 +24,13 @@ def delete_user(id):
     except Exception as e:
         print("Error: ", e)
         
-def user_exist(username, password):
+def get_userID(email, password):
     try:
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
             password = hashlib.sha256(password.encode()).hexdigest()
-            cur.execute("SELECT * FROM users WHERE username = %s AND pass = %s", (username, password))
-            return len(cur.fetchall()) == 1
+            cur.execute("SELECT id FROM users WHERE email = %s AND pass = %s", (email, password))
+            return cur.fetchall()
     except Exception as e:
         print("Error: ", e)
 

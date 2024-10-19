@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "./label";
 import { Input } from "./input";
 import { cn } from "@/app/lib/utils";
@@ -7,11 +7,20 @@ import {
   IconBrandGithub,
   IconBrandGoogle,
 } from "@tabler/icons-react";
+import axios from "axios";
 
 export function SignupForm() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
+    axios.post("http://localhost:5000/register", {"email":email, "password":password, "first":firstName, "last":lastName, "username":"catz"}).then((response) => {
+      console.log(response);
+    });
   };
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white">
@@ -19,20 +28,20 @@ export function SignupForm() {
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="Ex. Amy" type="text" />
+            <Input id="firstname" placeholder="Ex. Amy" type="text" onChange={(e)=>{setFirstName(e.target.value)}}/>
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Ex. Okuma" type="text" />
+            <Input id="lastname" placeholder="Ex. Okuma" type="text" onChange={(e)=>{setLastName(e.target.value)}}/>
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="example@gmail.com" type="email" />
+          <Input id="email" placeholder="example@gmail.com" type="email" onChange={(e)=>{setEmail(e.target.value)}}/>
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="************" type="password" />
+          <Input id="password" placeholder="************" type="password" onChange={(e)=>{setPassword(e.target.value)}}/>
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="confirmpassword">Confirm Password</Label>
