@@ -69,12 +69,15 @@ def edit_category(id, category):
         
 
 def upload_file(file):
-    storage_client = google.cloud.storage.Client()
-    file_name, file_extension = os.path.splitext(file.filename)
+    try:
+        storage_client = google.cloud.storage.Client()
+        file_name, file_extension = os.path.splitext(file.filename)
 
-    bucket = storage_client.get_bucket('bucket_of_photos')
+        bucket = storage_client.get_bucket('bucket_of_photos')
 
-    blob = bucket.blob(file_name + file_extension)
-    blob.upload_from_string(file.read(), content_type=file.content_type)
-
-    return blob.public_url
+        blob = bucket.blob(file_name + file_extension)
+        blob.upload_from_string(file.read(), content_type=file.content_type)
+        # add_clothe("theres a froggy", "shirt", blob.public_url, 2251799813685249)
+        
+    except Exception as e:
+        print("Error: ", e)
