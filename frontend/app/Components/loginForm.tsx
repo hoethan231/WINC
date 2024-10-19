@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "./label";
 import { Input } from "./input";
 import { cn } from "@/app/lib/utils";
@@ -10,22 +10,38 @@ import {
 import axios from "axios";
 
 export function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios.get("http://localhost:5000/login").then((response) => {
-      console.log(response);
+    axios.post("http://localhost:5000/login", { "email":email, "password":password }).then((response) => {
+      sessionStorage.setItem("userID", response.data.userID);
     });
   };
+
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white">
       <form className="my-8" onSubmit={handleSubmit}>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="example@gmail.com" type="email" />
+          <Input
+            id="email"
+            placeholder="example@gmail.com"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="************" type="password" />
+          <Input
+            id="password"
+            placeholder="************"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </LabelInputContainer>
 
         <button
