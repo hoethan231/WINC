@@ -3,11 +3,18 @@ import React from "react";
 import { Label } from "./label";
 import { Input } from "./input";
 import { cn } from "@/app/lib/utils";
+import {
+  IconBrandGithub,
+  IconBrandGoogle,
+} from "@tabler/icons-react";
+import axios from "axios";
 
-export function LoginForm({setUserID}: {setUserID: (id: string) => void}) {
+export function LoginForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
+    axios.get("http://localhost:5000/login").then((response) => {
+      console.log(response);
+    });
   };
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white">

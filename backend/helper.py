@@ -24,13 +24,13 @@ def delete_user(id):
     except Exception as e:
         print("Error: ", e)
         
-def user_exist(username, password):
+def get_userID(username, password):
     try:
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
             password = hashlib.sha256(password.encode()).hexdigest()
-            cur.execute("SELECT * FROM users WHERE username = %s AND pass = %s", (username, password))
-            return len(cur.fetchall()) == 1
+            cur.execute("SELECT id FROM users WHERE username = %s AND pass = %s", (username, password))
+            return cur.fetchall()
     except Exception as e:
         print("Error: ", e)
 

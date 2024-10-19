@@ -14,11 +14,12 @@ def upload_file_route():
     print(file)
     return "success", 200
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET'])
 def login():
     data = request.json
-    if db.user_exist(data['username'], data['password']):
-        return "success", 200
+    userID = db.get_userID(data['username'], data['password'])
+    if userID:
+        return userID, 200
     return "failed", 401
 
 if __name__ == '__main__':

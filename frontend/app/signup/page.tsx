@@ -12,7 +12,7 @@ export default function signupPage({setUserID}: {setUserID: (id: string) => void
                     <TabsTrigger value="logIn">Log In</TabsTrigger>
                 </TabsList>
                 <TabsContent value="signUp"><SignupForm /></TabsContent>
-                <TabsContent value="logIn"><LoginForm setUserID={setUserID}></LoginForm></TabsContent>
+                <TabsContent value="logIn"><LoginForm></LoginForm></TabsContent>
             </Tabs>
             </div>
             <div className="w-1/2 bg-blurBackground bg-[#87ADDC] bg-cover bg-center flex justify-center items-center text-white text-6xl">
