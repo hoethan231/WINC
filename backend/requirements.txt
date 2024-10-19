@@ -2,3 +2,5 @@ hashlib
 singlestoredb
 python-dotenv
 google-cloud-storage
+flask-cors
+flask
