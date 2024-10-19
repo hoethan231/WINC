@@ -16,7 +16,9 @@ def upload_file_route():
         file = request.files.get("file")
         if not file:
             return jsonify({"error": "Invalid file"}), 400
-        db.upload_file(file)
+        file_name, file_extension = os.path.splitext(file.filename)
+        file = crop_image(file)
+        db.upload_file(file, file_name, file_extension)
         return "success", 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
