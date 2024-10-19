@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+import google.cloud.storage
 import singlestoredb as s2
 import hashlib
 import os
@@ -28,9 +29,52 @@ def user_exist(username, password):
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
             password = hashlib.sha256(password.encode()).hexdigest()
-            return len(cur.execute("SELECT * FROM users WHERE (user, pass) VALUES (%s, %s)", (username, password))) == 1
+            cur.execute("SELECT * FROM users WHERE username = %s AND pass = %s", (username, password))
+            return len(cur.fetchall()) == 1
     except Exception as e:
         print("Error: ", e)
 
-create_user("cat", "wiskers", "catzz@")
-user_exist("cat", "wiskers")
+def add_clothe(description, category, imgURL, userID):
+    try:
+        conn = s2.connect(os.getenv("SSDB_URL"))
+        with conn.cursor() as cur:
+            cur.execute("INSERT INTO clothe (descriptionn, category, imgURL, userID) VALUES (%s, %s, %s, %s)", 
+                        (description, category, imgURL, userID))
+    except Exception as e:
+        print("Error: ", e)
+        
+def delete_clothe(id):
+    try:
+        conn = s2.connect(os.getenv("SSDB_URL"))
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM clothe WHERE id = %s", (id))
+    except Exception as e:
+        print("Error: ", e)
+
+def edit_description(id, description):
+    try:
+        conn = s2.connect(os.getenv("SSDB_URL"))
+        with conn.cursor() as cur:
+            cur.execute("UPDATE clothe SET descriptionn = %s WHERE id = %s", (description, id))
+    except Exception as e:
+        print("Error: ", e)
+        
+def edit_category(id, category):
+    try:
+        conn = s2.connect(os.getenv("SSDB_URL"))
+        with conn.cursor() as cur:
+            cur.execute("UPDATE clothe SET category = %s WHERE id = %s", (category, id))
+    except Exception as e:
+        print("Error: ", e)
+        
+
+def upload_file(file):
+    storage_client = google.cloud.storage.Client()
+    file_name, file_extension = os.path.splitext(file.filename)
+
+    bucket = storage_client.get_bucket('bucket_of_photos')
+
+    blob = bucket.blob(file_name + file_extension)
+    blob.upload_from_string(file.read(), content_type=file.content_type)
+
+    return blob.public_url
