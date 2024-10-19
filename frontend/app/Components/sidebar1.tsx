@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "./sidebar";
+import defaultPfp from "../assets/default_pfp.jpg";
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -19,35 +20,35 @@ export function SidebarDemo() {
       label: "Dashboard",
       href: "#",
       icon: (
-        <IconBrandTabler className="text-black h-5 w-5 flex-shrink-0" />
+        <IconBrandTabler className="text-black h-6 w-6 flex-shrink-0" />
       ),
     },
     {
       label: "My Wardrobe",
       href: "#",
       icon: (
-        <IconHanger2 className="text-black h-5 w-5 flex-shrink-0" />
+        <IconHanger2 className="text-black h-6 w-6 flex-shrink-0" />
       ),
     },
     {
       label: "Outfit Log",
       href: "#",
       icon: (
-        <IconCalendarMonth className="text-black h-5 w-5 flex-shrink-0" />
+        <IconCalendarMonth className="text-black h-6 w-6 flex-shrink-0" />
       ),
     },
     {
       label: "Saved Outfits",
       href: "#",
       icon: (
-        <IconHeartFilled className="text-black h-5 w-5 flex-shrink-0" />
+        <IconHeartFilled className="text-black h-6 w-6 flex-shrink-0" />
       ),
     },
     {
       label: "Log Out",
       href: "#",
       icon: (
-        <IconArrowLeft className="text-black h-5 w-5 flex-shrink-0" />
+        <IconArrowLeft className="text-black h-6 w-6 flex-shrink-0" />
       ),
     },
   ];
@@ -55,15 +56,19 @@ export function SidebarDemo() {
   return (
     <div
       className={cn(
+<<<<<<< HEAD:frontend/app/Components/sidebar1.tsx
         "rounded-md flex flex-col md:flex-row bg-white-100 w-full flex-1 max-w-7xl mx-auto border border-neutral-200 overflow-hidden",
         "h-[60vh]" // for your use case, use `h-screen` instead of `h-[60vh]`
+=======
+        "rounded-md flex flex-col md:flex-row min-w-full h-screen flex-1 overflow-hidden"
+>>>>>>> bd30308 (add sidebar):frontend/app/Components/sidebarContainer.tsx
       )}
     >
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
+      <Sidebar open={open} setOpen={setOpen} >
+        <SidebarBody className="justify-between gap-16">
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
+            <div className="mt-8 flex flex-col gap-4">
               {links.map((link, idx) => (
                 <SidebarLink key={idx} link={link} />
               ))}
@@ -76,7 +81,7 @@ export function SidebarDemo() {
                 href: "#",
                 icon: (
                   <Image
-                    src="/assets/defaultuser.jpeg"
+                    src={defaultPfp}
                     className="h-7 w-7 flex-shrink-0 rounded-full"
                     width={50}
                     height={50}
@@ -88,7 +93,6 @@ export function SidebarDemo() {
           </div>
         </SidebarBody>
       </Sidebar>
-      <Dashboard />
     </div>
   );
 }
@@ -102,7 +106,7 @@ export const Logo = () => {
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        style={{ color: '#39516E', fontSize: '20px' }}
+        style={{ color: '#39516E', fontSize: '24px' }}
         className="font-bold whitespace-pre"
       >
         [name in progress]
@@ -118,31 +122,5 @@ export const LogoIcon = () => {
     >
       <div className="h-5 w-6 bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
     </Link>
-  );
-};
-
-// Dummy dashboard component with content
-const Dashboard = () => {
-  return (
-    <div className="flex flex-1">
-      <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 bg-white flex flex-col gap-2 flex-1 w-full h-full">
-        <div className="flex gap-2">
-          {[...new Array(4)].map((i) => (
-            <div
-              key={"first-array" + i}
-              className="h-20 w-full rounded-lg animate-pulse" style={{backgroundColor: '#E9E9E9'}}
-            ></div>
-          ))}
-        </div>
-        <div className="flex gap-2 flex-1">
-          {[...new Array(2)].map((i) => (
-            <div
-              key={"second-array" + i}
-              className="h-full w-full rounded-lg animate-pulse" style={{backgroundColor: '#E9E9E9'}}
-            ></div>
-          ))}
-        </div>
-      </div>
-    </div>
   );
 };
