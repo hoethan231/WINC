@@ -3,10 +3,6 @@ import React from "react";
 import { Label } from "./label";
 import { Input } from "./input";
 import { cn } from "@/app/lib/utils";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-} from "@tabler/icons-react";
 
 export function LoginForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
