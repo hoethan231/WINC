@@ -25,9 +25,10 @@ interface GeneratedOutfitProps {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if(vibe) {
-      axios.post("http://localhost:3000/get_combinations", { "vibe":vibe, "limit":5 })
+      axios.post("http://localhost:5000/get_combinations", { "vibe":vibe, "limit":5 })
       .then((response) => {
         setCombinations(response.data);
+        console.log(combinations);
       })
       .catch((error) => {
         console.log("error:" + error);

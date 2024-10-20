@@ -115,7 +115,7 @@ def rag_top_items(vibe, limit, clothing_type):
             search = embed(vibe)["embedding"]
 
             query = f"""
-            SELECT id, descriptionn, category, imgURL, description_embedding <*> ('{search}':>VECTOR(768)) AS score
+            SELECT imgURL, description_embedding <*> ('{search}':>VECTOR(768)) AS score
             FROM clothe
             WHERE category = "{clothing_type}"
             ORDER BY score DESC
@@ -125,9 +125,6 @@ def rag_top_items(vibe, limit, clothing_type):
             cur.execute(query)
 
             results = cur.fetchall()
-            for row in results:
-                print(row)
-
             return results
     except Exception as e:
         print("Error: ", e)
