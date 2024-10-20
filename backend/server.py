@@ -42,6 +42,10 @@ def register():
         data["first"], data["last"], data["username"], data["password"], data["email"]
     )
 
+@app.route("/get_images", methods=["GET"])
+def get_clothes():
+    clothes = db.get_clothes(2251799813685250)
+    return jsonify(clothes), 200
 
 if __name__ == "__main__":
     app.run(debug=True)

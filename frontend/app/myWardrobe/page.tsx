@@ -2,6 +2,7 @@
 import { SidebarContainer } from "../Components/sidebarContainer"
 import { ImageUpload } from "../Components/imageUpload";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function myWardrobe() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -9,10 +10,10 @@ export default function myWardrobe() {
 
   useEffect(() => {
     const fetchImages = async () => {
-      const fetchedImages: string[] = [
-
-      ];
-      setImages(fetchedImages);
+      await axios.get("http://localhost:5000/get_images").then((response) => {
+        console.log(response.data);
+        // setImages(fetchedImages);
+      });
     };
     fetchImages();
   },[]);

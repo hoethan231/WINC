@@ -88,7 +88,26 @@ def upload_file(file, file_name):
         
     except Exception as e:
         print("Error: ", e)
-    
+
+def get_clothes(userID):
+    try:
+        conn = s2.connect(os.getenv("SSDB_URL"))
+        with conn.cursor() as cur:
+            cur.execute("SELECT descriptionn, category, imgURL FROM clothe WHERE userID = %s", (userID))
+            results = cur.fetchall()
+            json_results = []
+            for result in results:
+                json_result = {
+                    "description": result[0],
+                    "category": result[1],
+                    "imgURL": result[2]
+                }
+                json_results.append(json_result)
+            print(json.dumps(json_results, indent=4))
+            return json_results
+    except Exception as e:
+        print("Error: ", e)
+
 def rag_top_items(vibe, limit, clothing_type):
     try:
         conn = s2.connect(os.getenv("SSDB_URL"))
