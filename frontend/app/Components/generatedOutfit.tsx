@@ -12,6 +12,8 @@ import {IconArrowUp} from "@tabler/icons-react"
 import { Button } from "./button"
 import { Input } from "./input"
 import axios from "axios";
+import { IconArrowLeft, IconArrowRight, IconHeart } from "@tabler/icons-react"
+
 import Image from "next/image"
 import { AspectRatio } from "../Components/aspectRatio"
 
@@ -41,18 +43,46 @@ interface GeneratedOutfitProps {
     }
   }
 
+  const handleNextClick = (n: number) => {
+    if (n + index < 0) {
+      setIndex(combinations.length - 1);
+    } else {
+      setIndex((index + n) % combinations.length);
+    }
+  }
+
+  const handleFavorite = () => {
+    let today = new Date();
+    const todayString = today.toISOString().slice(0, 19).replace('T', ' ');
+    axios.post("http://localhost:5000/upload_outfit", { "userID": 12345, "top_part_url": combinations[index][0], "bottom_part_url": combinations[index][1], "date_added":todayString, "saved": 1  })
+    .then((response) => {
+      console.log("success");
+    })
+    .catch((error) => {
+        console.log("error:" + error);
+    });
+
+  }
+
     return (
       <div className="flex flex-col items-center">
         <Card
-          className={`bg-[#f5f5f5] ${
+          className={`bg-[#f5f5f5] flex justify-center items-center ${
             sidebarOpen ? "w-[700px]" : "w-[950px]"
           } h-[600px] mt-10 ml-10`}
         >
-          {combinations.length > 0 && index < combinations.length && (
-              <div>
-                <img src={combinations[index][0]} alt={`Wardrobe Item`} width={200} height={200} className="rounded-md object-cover"/>
-                <img src={combinations[index][1]} alt={`Wardrobe Item`} width={200} height={200} className="rounded-md object-cover"/>
-              </div>
+          {combinations.length > 0 && (
+            <div className="flex justify-between items-center">
+              <Button onClick={() => handleNextClick(-1)} className=""><IconArrowLeft size={128} /></Button>
+              <Card className="w-[25vw] h-[60vh] flex justify-center items-center">
+                <div className="flex-1">
+                  <img src={combinations[index][0]} alt={`Wardrobe Item`} width={200} height={200} className="rounded-md object-cover"/>
+                  <img src={combinations[index][1]} alt={`Wardrobe Item`} width={200} height={200} className="rounded-md object-cover"/>
+                  <Button onClick={handleFavorite}><IconHeart/></Button>
+                </div>
+              </Card>
+              <Button onClick={() => handleNextClick(1)}><IconArrowRight size={48} /></Button>
+            </div>
           )}
         </Card>
         <form className={`flex ml-10 mt-3 ${sidebarOpen ? "w-[700px]" : "w-[950px]"}`}

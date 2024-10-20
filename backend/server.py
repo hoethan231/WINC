@@ -36,6 +36,7 @@ def upload_outfit_route():
         data["date_added"],
         data["saved"],
     )
+    return "success", 200
 
 
 @app.route("/login", methods=["POST"])
