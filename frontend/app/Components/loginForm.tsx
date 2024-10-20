@@ -2,11 +2,8 @@
 import React, { useState } from "react";
 import { Label } from "./label";
 import { Input } from "./input";
+import { Button } from "./button";
 import { cn } from "@/app/lib/utils";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-} from "@tabler/icons-react";
 import axios from "axios";
 
 export function LoginForm() {
@@ -44,13 +41,13 @@ export function LoginForm() {
           />
         </LabelInputContainer>
 
-        <button
+        <Button
           className="bg-[#39516E] block w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
           type="submit"
         >
           Log in &rarr;
           <BottomGradient />
-        </button>
+        </Button>
       </form>
     </div>
   );
