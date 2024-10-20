@@ -2,7 +2,6 @@
 import { SidebarContainer } from "../Components/sidebarContainer";
 import Weather from "../Components/weather";
 import { GeneratedOutfit } from "../Components/generatedOutfit";
-import { GenerateOptions } from "../Components/generateOptions";
 import { MiniWardrobe } from "../Components/miniWardrobe";
 import { useState } from "react";
 
@@ -18,7 +17,6 @@ export default function Dashboard() {
         </div>
         <div className="h-1 bg-[#39516E] mx-10 -my-3" />
         <div className="flex">
-          <GenerateOptions />
           <GeneratedOutfit sidebarOpen={sidebarOpen} />
           <div>
             <Weather />
