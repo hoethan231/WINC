@@ -46,7 +46,7 @@ def upload_outfit_route():
 
 
 @app.route("/bookmark_outfit", methods=["POST"])
-def upload_outfit_route():
+def bookmark_outfit_route():
     data = request.json
     if not data:
         return jsonify({"error": "Invalid input"}), 400
@@ -84,6 +84,11 @@ def register():
 def get_clothes():
     clothes = db.get_clothes(2251799813685250)
     return jsonify(clothes), 200
+
+@app.route("/get_outfits", methods=["GET"])
+def get_outfits():
+    outfits = db.get_outfit_saved(2251799813685250)
+    return jsonify(outfits), 200
 
 
 @app.route("/get_combinations", methods=["POST"])

@@ -186,7 +186,7 @@ def get_outfit_id(userID, top_part_url, bottom_part_url):
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT id FROM outfits WHERE userID = %s AND top_part_url = %s AND bottom_part_url = %s",
+                "SELECT id FROM outfits WHERE userID = %s AND top_part = %s AND bottom_part = %s",
                 (userID, top_part_url, bottom_part_url),
             )
     except Exception as e:
@@ -201,6 +201,15 @@ def get_outfit_saved(userID):
                 "SELECT top_part, bottom_part FROM outfits WHERE userID = %s AND saved = 1",
                 (userID),
             )
+            results = cur.fetchall()
+            json_results = []
+            for result in results:
+                json_result = {
+                    "top_part_url": result[0],
+                    "bottom_part_url": result[1],
+                }
+                json_results.append(json_result)
+            return json_results
     except Exception as e:
         print("Error: ", e)
 
