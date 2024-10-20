@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Card,
     CardContent,
@@ -11,19 +11,28 @@ import {
 import {IconArrowUp} from "@tabler/icons-react"
 import { Button } from "./button"
 import { Input } from "./input"
+import axios from "axios";
 
 interface GeneratedOutfitProps {
     sidebarOpen: boolean;
-    onVibeChange: (vibe: string) => void;
   }
-
-export function GeneratedOutfit({ sidebarOpen, onVibeChange }: GeneratedOutfitProps) {
+  
+  export function GeneratedOutfit({ sidebarOpen }: GeneratedOutfitProps) {
+  const [combinations, setCombinations] = useState([]);
+  const [index, setIndex] = useState(0);
   const [vibe, setVibe] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onVibeChange(vibe);
-    console.log("Vibe sent to backend:", vibe);
+    if(vibe) {
+      axios.post("http://localhost:3000/get_combinations", { "vibe":vibe, "limit":5 })
+      .then((response) => {
+        setCombinations(response.data);
+      })
+      .catch((error) => {
+        console.log("error:" + error);
+      });
+    }
   }
 
     return (
@@ -32,7 +41,13 @@ export function GeneratedOutfit({ sidebarOpen, onVibeChange }: GeneratedOutfitPr
           className={`bg-[#f5f5f5] ${
             sidebarOpen ? "w-[700px]" : "w-[950px]"
           } h-[600px] mt-10 ml-10`}
-        ></Card>
+        >
+          {combinations && <div>
+            <img src={combinations[index][0]}/>
+            <img src={combinations[index][1]}/>
+          </div>}
+
+        </Card>
         <form className={`flex ml-10 mt-3 ${sidebarOpen ? "w-[700px]" : "w-[950px]"}`}
         onSubmit={handleSubmit}>
           <Input placeholder="What's your vibe today?"
