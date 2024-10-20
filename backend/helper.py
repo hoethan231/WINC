@@ -103,7 +103,6 @@ def get_clothes(userID):
                     "imgURL": result[2]
                 }
                 json_results.append(json_result)
-            print(json.dumps(json_results, indent=4))
             return json_results
     except Exception as e:
         print("Error: ", e)
