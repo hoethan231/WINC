@@ -22,7 +22,9 @@ export function GeneratedOutfit({ sidebarOpen }: GeneratedOutfitProps) {
             sidebarOpen ? "w-[450px]" : "w-[700px]"
           } h-[600px] mt-10`}
         ></Card>
-        <Button className="bg-[#39516E] text-white text-2xl py-7 px-44 rounded-[15px] font-light mt-3">
+        <Button className={`bg-[#39516E] text-white text-2xl py-7 rounded-[15px] font-light mt-3 ${
+          sidebarOpen ? "px-32" : "px-64"
+        }`}>
           generate outfits
         </Button>
       </div>
