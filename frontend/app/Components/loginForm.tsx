@@ -4,10 +4,6 @@ import { Label } from "./label";
 import { Input } from "./input";
 import { Button } from "./button";
 import { cn } from "@/app/lib/utils";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-} from "@tabler/icons-react";
 import axios from "axios";
 
 export function LoginForm() {
