@@ -1,12 +1,14 @@
 import os
+
 import google.cloud.storage
+import helper as db
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import helper as db
 from image_segmentation import crop_image
 
 app = Flask(__name__)
 CORS(app)
+
 
 @app.route("/upload_file", methods=["POST"])
 def upload_file_route():
@@ -20,6 +22,20 @@ def upload_file_route():
         return "success", 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/upload_outfit", methods=["POST"])
+def upload_outfit_route():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Invalid input"}), 400
+    db.add_outfit(
+        data["userID"],
+        data["top_part_url"],
+        data["bottom_part_url"],
+        data["date_added"],
+        data["saved"],
+    )
 
 
 @app.route("/login", methods=["POST"])
