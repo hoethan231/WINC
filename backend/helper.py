@@ -112,23 +112,28 @@ def upload_file(file, file_name):
     except Exception as e:
         print("Error: ", e)
 
+
 def get_clothes(userID):
     try:
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
-            cur.execute("SELECT descriptionn, category, imgURL FROM clothe WHERE userID = %s", (userID))
+            cur.execute(
+                "SELECT descriptionn, category, imgURL FROM clothe WHERE userID = %s",
+                (userID),
+            )
             results = cur.fetchall()
             json_results = []
             for result in results:
                 json_result = {
                     "description": result[0],
                     "category": result[1],
-                    "imgURL": result[2]
+                    "imgURL": result[2],
                 }
                 json_results.append(json_result)
             return json_results
     except Exception as e:
         print("Error: ", e)
+
 
 def rag_top_items(vibe, limit, clothing_type):
     try:
@@ -164,25 +169,49 @@ def add_outfit(userID, top_part_url, bottom_part_url, date_added, saved):
         print("Error: ", e)
 
 
-def get_outfits(userID, start_date, end_date):
+def update_outfit_saved(userID, id, saved):
     try:
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT top_part, bottom_part FROM outfits WHERE userID = %s AND %s <= date_added AND date_added <= %s",
-                (userID, start_date, end_date),
+                "UPDATE outfits SET saved = %s WHERE userID = %s AND id = %s",
+                (saved, userID, id),
             )
     except Exception as e:
         print("Error: ", e)
 
 
-def get_saved(userID):
+def get_outfit_id(userID, top_part_url, bottom_part_url):
+    try:
+        conn = s2.connect(os.getenv("SSDB_URL"))
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT id FROM outfits WHERE userID = %s AND top_part_url = %s AND bottom_part_url = %s",
+                (userID, top_part_url, bottom_part_url),
+            )
+    except Exception as e:
+        print("Error: ", e)
+
+
+def get_outfit_saved(userID):
     try:
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
             cur.execute(
                 "SELECT top_part, bottom_part FROM outfits WHERE userID = %s AND saved = 1",
                 (userID),
+            )
+    except Exception as e:
+        print("Error: ", e)
+
+
+def get_outfit_range(userID, start_date, end_date):
+    try:
+        conn = s2.connect(os.getenv("SSDB_URL"))
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT top_part, bottom_part FROM outfits WHERE userID = %s AND %s <= date_added AND date_added <= %s",
+                (userID, start_date, end_date),
             )
     except Exception as e:
         print("Error: ", e)
