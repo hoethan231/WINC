@@ -52,7 +52,7 @@ export function SidebarContainer({ open, setOpen }: SidebarContainerProps) {
     },
     {
       label: "Log Out",
-      href: "#",
+      href: "/",
       icon: (
         <IconArrowLeft className="text-black h-6 w-6 flex-shrink-0" />
       ),
@@ -74,7 +74,7 @@ export function SidebarContainer({ open, setOpen }: SidebarContainerProps) {
           <div>
             <SidebarLink
               link={{
-                label: "[User's Name]",
+                label: "Ethan Ho",
                 href: "#",
                 icon: (
                   <Image

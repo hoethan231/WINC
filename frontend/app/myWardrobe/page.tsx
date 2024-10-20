@@ -27,7 +27,7 @@ export default function myWardrobe() {
                     <ImageUpload />
                 </div>
             </div>
-            <div className="h-1 mx-10 -my-3" />
+            <div className="h-1 bg-[#39516E] mx-10 -my-3" />
             <div className="grid grid-cols-3 gap-4 p-10">
               {images.map((src, index) => (
                 <div key={index}>
