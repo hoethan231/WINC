@@ -47,5 +47,15 @@ def get_clothes():
     clothes = db.get_clothes(2251799813685250)
     return jsonify(clothes), 200
 
+@app.route("/get_combinations", methods=["POST"])
+def get_combinations():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Error fetching"}), 400
+    n_tops = db.rag_top_items(data["vibe"], data["limit"], "top")
+    n_bottoms = db.rag_top_items(data["vibe"], data["limit"], "bottom")
+    combinations = zip(n_tops, n_bottoms)
+    return list(combinations)
+
 if __name__ == "__main__":
     app.run(debug=True)
