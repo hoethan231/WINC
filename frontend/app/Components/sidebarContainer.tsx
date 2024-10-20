@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "./sidebar";
 import defaultPfp from "../assets/default_pfp.jpg";
+import winc from "../assets/winc.png";
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -14,7 +15,12 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/app/lib/utils";
 
-export function SidebarContainer() {
+interface SidebarContainerProps {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>; // Updated type
+}
+
+export function SidebarContainer({ open, setOpen }: SidebarContainerProps) {
   const links = [
     {
       label: "Dashboard",
@@ -46,24 +52,19 @@ export function SidebarContainer() {
     },
     {
       label: "Log Out",
-      href: "#",
+      href: "/",
       icon: (
         <IconArrowLeft className="text-black h-6 w-6 flex-shrink-0" />
       ),
     },
   ];
-  const [open, setOpen] = useState(false);
+
   return (
-    <div
-      className={cn(
-        "rounded-md h-screen overflow-hidden"
-      )}
-    >
-      <Sidebar open={open} setOpen={setOpen} >
+    <div className={cn("rounded-md h-screen overflow-hidden")}>
+      <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className="justify-between gap-16">
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden mt-6">
-            {/* {open ? <Logo /> : <LogoIcon />} */}
-            <Logo />
+            {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-4">
               {links.map((link, idx) => (
                 <SidebarLink key={idx} link={link} />
@@ -73,7 +74,7 @@ export function SidebarContainer() {
           <div>
             <SidebarLink
               link={{
-                label: "[User's Name]",
+                label: "Ethan Ho",
                 href: "#",
                 icon: (
                   <Image
@@ -95,17 +96,19 @@ export function SidebarContainer() {
 export const Logo = () => {
   return (
     <Link
-      href="#"
+      href="/dashboard"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <div className="h-5 w-6 bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+      <div className="h-6 w-7 bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0">
+      <Image src={winc} width={50} height={50} alt="logo"/>
+      </div>
       <motion.span
         initial={{ opacity: 1 }}
         animate={{ opacity: 1 }}
         style={{ color: '#39516E', fontSize: '24px' }}
         className="font-bold whitespace-pre"
       >
-        app name
+        winc
       </motion.span>
     </Link>
   );
@@ -113,10 +116,12 @@ export const Logo = () => {
 export const LogoIcon = () => {
   return (
     <Link
-      href="#"
+      href="/dashboard"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <div className="h-5 w-6 bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+      <div className="h-6 w-7 bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0">
+        <Image src={winc} width={50} height={50} alt="logo"/>
+      </div>
     </Link>
   );
 };

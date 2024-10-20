@@ -1,6 +1,6 @@
-hashlib
 singlestoredb
 python-dotenv
 google-cloud-storage
+google-generativeai
 flask-cors
 flask

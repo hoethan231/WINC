@@ -1,11 +1,16 @@
 "use client"
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "./button";
 import { IconFileFilled } from "@tabler/icons-react";
 import axios from "axios";
 
 export function ImageUpload() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const [userID, setUserID] = useState<string | null>(null);
+    
+    useEffect(() => {
+        setUserID(localStorage.getItem("userID"));
+      }, []);
 
     const uploadFile = (file: File) => {
         const formData = new FormData();

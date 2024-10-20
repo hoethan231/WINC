@@ -3,11 +3,8 @@ import React, { useState } from "react";
 import { Label } from "./label";
 import { Input } from "./input";
 import { cn } from "@/app/lib/utils";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-} from "@tabler/icons-react";
-import axios from "axios";
+import { Button } from "./button";
+import Link from "next/link";
 
 export function SignupForm() {
 
@@ -16,15 +13,9 @@ export function SignupForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    axios.post("http://localhost:5000/register", {"email":email, "password":password, "first":firstName, "last":lastName, "username":"catz"}).then((response) => {
-      console.log(response);
-    });
-  };
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white">
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-8" >
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
@@ -47,14 +38,15 @@ export function SignupForm() {
           <Label htmlFor="confirmpassword">Confirm Password</Label>
           <Input id="confirmpassword" placeholder="************" type="confirmpassword" />
         </LabelInputContainer>
-
-        <button
-          className="bg-[#39516E] block w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
-          type="submit"
-        >
-          Sign up &rarr;
-          <BottomGradient />
-        </button>
+        <Link href="/dashboard">
+          <Button
+            className="bg-[#39516E] block w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
+            type="submit"
+          >
+            Sign up &rarr;
+            <BottomGradient />
+          </Button>
+        </Link>
       </form>
     </div>
   );

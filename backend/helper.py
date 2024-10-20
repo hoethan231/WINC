@@ -9,13 +9,13 @@ from describe import embed
 
 load_dotenv()
 
-def create_user(username, password, email):
+def create_user(first, last, username, password, email):
     try:
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
             password = hashlib.sha256(password.encode()).hexdigest()
-            cur.execute("INSERT INTO users (username, pass, email) VALUES (%s, %s, %s)", 
-                        (username, password, email))
+            cur.execute("INSERT INTO users (firstName, lastName, username, pass, email) VALUES (%s, %s, %s, %s, %s)", 
+                        (first, last, username, password, email))
     except Exception as e:
         print("Error: ", e)
 
@@ -27,13 +27,13 @@ def delete_user(id):
     except Exception as e:
         print("Error: ", e)
         
-def user_exist(username, password):
+def get_userID(email, password):
     try:
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
             password = hashlib.sha256(password.encode()).hexdigest()
-            cur.execute("SELECT * FROM users WHERE username = %s AND pass = %s", (username, password))
-            return len(cur.fetchall()) == 1
+            cur.execute("SELECT id FROM users WHERE email = %s AND pass = %s", (email, password))
+            return cur.fetchall()
     except Exception as e:
         print("Error: ", e)
 
@@ -70,10 +70,11 @@ def edit_category(id, category):
     except Exception as e:
         print("Error: ", e)
 
-def upload_file(file, file_name, file_extension):
+
+def upload_file(file):
     try:
         storage_client = google.cloud.storage.Client()
-        bucket = storage_client.get_bucket('bucket_of_photos')
+        file_name, file_extension = os.path.splitext(file.filename)
 
         blob = bucket.blob(file_name+".png")
         blob.upload_from_file(file, content_type=f'image/png')
@@ -83,7 +84,6 @@ def upload_file(file, file_name, file_extension):
         json_response = json.loads(response)
         description = json_response['description'] + " tags: " + ", ".join(json_response['tags'])
         embedding = str(embed(description)["embedding"])
-        print(embedding)
         add_clothe(description, json_response['type'], blob.public_url, 2251799813685250, embedding)
         
     except Exception as e:

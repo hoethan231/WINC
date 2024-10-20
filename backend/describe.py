@@ -19,7 +19,20 @@ def get_clothing_JSON(imgUrl):
         "max_output_tokens": 8192,
         "response_mime_type": "application/json",
     }
+def get_clothing_JSON(imgUrl):
+    # Create the model
+    generation_config = {
+        "temperature": 1,
+        "top_p": 0.95,
+        "top_k": 64,
+        "max_output_tokens": 8192,
+        "response_mime_type": "application/json",
+    }
 
+    model = genai.GenerativeModel(
+        model_name="gemini-1.5-flash",
+        generation_config=generation_config,
+    )
     model = genai.GenerativeModel(
         model_name="gemini-1.5-flash",
         generation_config=generation_config,

@@ -2,27 +2,18 @@
 import React, { useState } from "react";
 import { Label } from "./label";
 import { Input } from "./input";
+import { Button } from "./button";
 import { cn } from "@/app/lib/utils";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-} from "@tabler/icons-react";
-import axios from "axios";
+import Link from "next/link";
 
 export function LoginForm() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    axios.post("http://localhost:5000/login", { "email":email, "password":password }).then((response) => {
-      sessionStorage.setItem("userID", response.data.userID);
-    });
-  };
-
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white">
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-8">
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
           <Input
@@ -43,14 +34,15 @@ export function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </LabelInputContainer>
-
-        <button
-          className="bg-[#39516E] block w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
-          type="submit"
-        >
-          Log in &rarr;
-          <BottomGradient />
-        </button>
+        <Link href="/dashboard">
+          <Button
+            className="bg-[#39516E] block w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
+            type="submit"
+          >
+            Log in &rarr;
+            <BottomGradient />
+          </Button>
+        </Link>
       </form>
     </div>
   );
