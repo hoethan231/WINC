@@ -34,7 +34,7 @@ export default function myWardrobe() {
 
     return (
       <div className="flex">
-        <SidebarContainer open={sidebarOpen} setOpen={setSidebarOpen} />
+        <SidebarContainer open={sidebarOpen} setOpen={setSidebarOpen}  />
         <div className="flex-grow">
             <div className="flex justify-between items-center m-10">
                 <h1 className="text-5xl font-semibold text-[#39516E]">My Wardrobe</h1>
