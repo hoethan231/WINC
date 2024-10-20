@@ -52,8 +52,8 @@ def get_combinations():
     data = request.json
     if not data:
         return jsonify({"error": "Error fetching"}), 400
-    n_tops = db.rag_top_items(data["vibe"], data["limit"], "top")["imgURL"]
-    n_bottoms = db.rag_top_items(data["vibe"], data["limit"], "bottom")["imgURL"]
+    n_tops = list(map((lambda x: x[0]), db.rag_top_items(data["vibe"], data["limit"], "top")))
+    n_bottoms = list(map((lambda x: x[0]), db.rag_top_items(data["vibe"], data["limit"], "bottom")))
     combinations = zip(n_tops, n_bottoms)
     return list(combinations)
 
