@@ -84,35 +84,32 @@ export function GeneratedOutfit({ sidebarOpen }: GeneratedOutfitProps) {
     });
     setSaved(!saved);
   };
-
-  return (
-    <div className="flex flex-col items-center">
-      <Card
-        className={`bg-[#f5f5f5] flex justify-center items-center ${
-          sidebarOpen ? "w-[700px]" : "w-[950px]"
-        } h-[600px] mt-10 ml-10`}
-      >
-        {combinations.length > 0 && (
-          <div className="flex justify-between items-center">
-            <Button onClick={() => handleNextClick(-1)} className="">
-              <IconArrowLeft size={128} />
-            </Button>
-            <Card className="w-[800px] h-[550px] flex justify-center items-center">
+    return (
+      <div className="flex flex-col items-center">
+        <Card
+          className={`bg-[#f5f5f5] flex justify-center items-center ${
+            sidebarOpen ? "w-[700px]" : "w-[950px]"
+          } h-[600px] mt-10 ml-10`}
+        >
+          {combinations.length > 0 && (
+            <div className="flex justify-between items-center">
+              <Button onClick={() => handleNextClick(-1)} className="ml-12"><IconArrowLeft size={128} /></Button>
+              <Card className={`w-[800px] h-[550px] flex justify-center items-center ${
+            sidebarOpen ? "w-[500px]" : "w-[750px]"
+          }`}>
+                <div className="">
+                  <img src={combinations[index][0]} alt={`Wardrobe Item`} width={200} height={200} className="rounded-md object-cover"/>
+                  <img src={combinations[index][1]} alt={`Wardrobe Item`} width={200} height={200} className="rounded-md object-cover"/>
+                </div>
+              </Card>
               <div className="">
-                <img
-                  src={combinations[index][0]}
-                  alt={`Wardrobe Item`}
-                  width={200}
-                  height={200}
-                  className="rounded-md object-cover"
-                />
-                <img
-                  src={combinations[index][1]}
-                  alt={`Wardrobe Item`}
-                  width={200}
-                  height={200}
-                  className="rounded-md object-cover"
-                />
+                <Button onClick={() => handleNextClick(1)} className="mb-16 mt-40"><IconArrowRight size={48} /></Button>
+                <div>
+                  <Button onClick={handleFavorite} className="static left-96 bottom-24"><IconHeart/></Button>
+                  <div>
+                    <Button>Wear Today</Button>
+                  </div>
+                </div>
               </div>
             </Card>
             <div className="">

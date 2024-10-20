@@ -60,7 +60,7 @@ export function SidebarContainer({ open, setOpen }: SidebarContainerProps) {
   ];
 
   return (
-    <div className={cn("rounded-md h-screen")}>
+    <div className={cn("rounded-md min-h-screen")}>
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className="justify-between gap-16">
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden mt-6">
