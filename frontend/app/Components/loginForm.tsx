@@ -7,6 +7,7 @@ import { cn } from "@/app/lib/utils";
 import axios from "axios";
 
 export function LoginForm() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,6 +15,8 @@ export function LoginForm() {
     e.preventDefault();
     axios.post("http://localhost:5000/login", { "email":email, "password":password }).then((response) => {
       sessionStorage.setItem("userID", response.data.userID);
+    }).catch((error) => {
+      console.log(error);
     });
   };
 
