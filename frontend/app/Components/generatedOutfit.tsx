@@ -74,14 +74,16 @@ interface GeneratedOutfitProps {
           {combinations.length > 0 && (
             <div className="flex justify-between items-center">
               <Button onClick={() => handleNextClick(-1)} className=""><IconArrowLeft size={128} /></Button>
-              <Card className="w-[25vw] h-[60vh] flex justify-center items-center">
-                <div className="flex-1">
+              <Card className="w-[800px] h-[550px] flex justify-center items-center">
+                <div className="">
                   <img src={combinations[index][0]} alt={`Wardrobe Item`} width={200} height={200} className="rounded-md object-cover"/>
                   <img src={combinations[index][1]} alt={`Wardrobe Item`} width={200} height={200} className="rounded-md object-cover"/>
-                  <Button onClick={handleFavorite}><IconHeart/></Button>
                 </div>
               </Card>
-              <Button onClick={() => handleNextClick(1)}><IconArrowRight size={48} /></Button>
+              <div className="">
+                <Button onClick={() => handleNextClick(1)}><IconArrowRight size={48} /></Button>
+                <Button onClick={handleFavorite} className="static left-96 bottom-24"><IconHeart/></Button>
+              </div>
             </div>
           )}
         </Card>
