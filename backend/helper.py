@@ -3,6 +3,9 @@ import google.cloud.storage
 import singlestoredb as s2
 import hashlib
 import os
+import json
+from describe import get_clothing_JSON
+from describe import embed
 
 load_dotenv()
 
@@ -34,12 +37,12 @@ def user_exist(username, password):
     except Exception as e:
         print("Error: ", e)
 
-def add_clothe(description, category, imgURL, userID):
+def add_clothe(description, category, imgURL, userID, embedding):
     try:
         conn = s2.connect(os.getenv("SSDB_URL"))
         with conn.cursor() as cur:
-            cur.execute("INSERT INTO clothe (descriptionn, category, imgURL, userID) VALUES (%s, %s, %s, %s)", 
-                        (description, category, imgURL, userID))
+            cur.execute("INSERT INTO clothe (descriptionn, category, imgURL, userID, description_embedding) VALUES (%s, %s, %s, %s, %s)", 
+                        (description, category, imgURL, userID, embedding))
     except Exception as e:
         print("Error: ", e)
         
@@ -75,7 +78,14 @@ def upload_file(file, file_name, file_extension):
 
         blob = bucket.blob(file_name+".png")
         blob.upload_from_file(file, content_type=f'image/png')
-        # add_clothe("theres a froggy", "shirt", blob.public_url, 2251799813685249)
+        
+        # generate gemini image description
+        response = get_clothing_JSON(blob.public_url)
+        json_response = json.loads(response)
+        description = json_response['description'] + " " + "tags: ".join(json_response['tags'])
+        embedding = str(embed(description)["embedding"])
+        print(embedding)
+        add_clothe(description, json_response['type'], blob.public_url, 2251799813685250, embedding)
         
     except Exception as e:
         print("Error: ", e)
