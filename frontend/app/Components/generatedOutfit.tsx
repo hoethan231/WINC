@@ -14,13 +14,15 @@ import { Input } from "./input"
 
 interface GeneratedOutfitProps {
     sidebarOpen: boolean;
+    onVibeChange: (vibe: string) => void;
   }
 
-export function GeneratedOutfit({ sidebarOpen }: GeneratedOutfitProps) {
+export function GeneratedOutfit({ sidebarOpen, onVibeChange }: GeneratedOutfitProps) {
   const [vibe, setVibe] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    onVibeChange(vibe);
     console.log("Vibe sent to backend:", vibe);
   }
 
