@@ -36,7 +36,7 @@ export default function Dashboard() {
         </div>
         <div className="h-1 bg-[#39516E] mx-10 -my-3" />
         <div className="flex">
-          <GeneratedOutfit sidebarOpen={sidebarOpen} onVibeChange={handleVibeChange}/>
+          <GeneratedOutfit sidebarOpen={sidebarOpen}/>
           <div>
             <Weather />
             <MiniWardrobe />
