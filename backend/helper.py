@@ -71,10 +71,10 @@ def edit_category(id, category):
         print("Error: ", e)
 
 
-def upload_file(file):
+def upload_file(file, file_name):
     try:
         storage_client = google.cloud.storage.Client()
-        file_name, file_extension = os.path.splitext(file.filename)
+        bucket = storage_client.get_bucket('bucket_of_photos')
 
         blob = bucket.blob(file_name+".png")
         blob.upload_from_file(file, content_type=f'image/png')
