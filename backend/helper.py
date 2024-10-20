@@ -69,7 +69,6 @@ def edit_category(id, category):
             cur.execute("UPDATE clothe SET category = %s WHERE id = %s", (category, id))
     except Exception as e:
         print("Error: ", e)
-        
 
 def upload_file(file, file_name, file_extension):
     try:
@@ -82,10 +81,34 @@ def upload_file(file, file_name, file_extension):
         # generate gemini image description
         response = get_clothing_JSON(blob.public_url)
         json_response = json.loads(response)
-        description = json_response['description'] + " " + "tags: ".join(json_response['tags'])
+        description = json_response['description'] + " tags: " + ", ".join(json_response['tags'])
         embedding = str(embed(description)["embedding"])
         print(embedding)
         add_clothe(description, json_response['type'], blob.public_url, 2251799813685250, embedding)
         
+    except Exception as e:
+        print("Error: ", e)
+    
+def rag_top_items(vibe, limit, clothing_type):
+    try:
+        conn = s2.connect(os.getenv("SSDB_URL"))
+        with conn.cursor() as cur:
+            search = embed(vibe)["embedding"]
+            
+            query = f"""
+            SELECT id, descriptionn, category, description_embedding <*> ('{search}':>VECTOR(768)) AS score 
+            FROM clothe
+            WHERE category = "{clothing_type}"
+            ORDER BY score DESC
+            LIMIT {limit};
+            """
+            
+            cur.execute(query)
+            
+            results = cur.fetchall()
+            for row in results:
+                print(f"Type: {row[2]}, Description: {row[1]}, Score: {row[3]} \n")
+            
+            return results
     except Exception as e:
         print("Error: ", e)
