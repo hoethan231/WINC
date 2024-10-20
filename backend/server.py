@@ -1,6 +1,5 @@
 import os
 
-import google.cloud.storage
 import helper as db
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -29,6 +28,13 @@ def upload_outfit_route():
     data = request.json
     if not data:
         return jsonify({"error": "Invalid input"}), 400
+    # Check if outfit exists
+    outfit_id = db.get_outfit_id(
+        data["userID"], data["top_part_url"], data["bottom_part_url"]
+    )
+    if outfit_id:
+        print(outfit_id)
+        return jsonify({"error": "Outfit already exists"}), 400
     db.add_outfit(
         data["userID"],
         data["top_part_url"],
@@ -36,6 +42,20 @@ def upload_outfit_route():
         data["date_added"],
         data["saved"],
     )
+    return "success", 200
+
+
+@app.route("/bookmark_outfit", methods=["POST"])
+def upload_outfit_route():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Invalid input"}), 400
+    outfit_id = db.get_outfit_id(
+        data["userID"], data["top_part_url"], data["bottom_part_url"]
+    )
+    if not outfit_id:
+        return jsonify({"error": "Outfit ID does not exist"}), 400
+    db.update_outfit_saved(data["userID"], outfit_id, data["saved"])
     return "success", 200
 
 
@@ -59,20 +79,27 @@ def register():
         data["first"], data["last"], data["username"], data["password"], data["email"]
     )
 
+
 @app.route("/get_images", methods=["GET"])
 def get_clothes():
     clothes = db.get_clothes(2251799813685250)
     return jsonify(clothes), 200
+
 
 @app.route("/get_combinations", methods=["POST"])
 def get_combinations():
     data = request.json
     if not data:
         return jsonify({"error": "Error fetching"}), 400
-    n_tops = list(map((lambda x: x[0]), db.rag_top_items(data["vibe"], data["limit"], "top")))
-    n_bottoms = list(map((lambda x: x[0]), db.rag_top_items(data["vibe"], data["limit"], "bottom")))
+    n_tops = list(
+        map((lambda x: x[0]), db.rag_top_items(data["vibe"], data["limit"], "top"))
+    )
+    n_bottoms = list(
+        map((lambda x: x[0]), db.rag_top_items(data["vibe"], data["limit"], "bottom"))
+    )
     combinations = zip(n_tops, n_bottoms)
     return list(combinations)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
