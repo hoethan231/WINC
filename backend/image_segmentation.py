@@ -40,10 +40,8 @@ def crop_image(img):
         image_rgba = cv2.cvtColor(image_data, cv2.COLOR_RGB2RGBA)
         image_rgba[..., 3] = np.where(condition, 255, 0)
         
-        Image.fromarray(image_rgba).save("output.png")
         cropped_image = Image.fromarray(image_rgba)
-
-        # Save to a BytesIO object
-        img_byte_arr = io.BytesIO()
-        img_byte_arr.seek(0)
-        return img_byte_arr 
+        byte_io = io.BytesIO()
+        cropped_image.save(byte_io, format="PNG")
+        byte_io.seek(0)
+        return byte_io 

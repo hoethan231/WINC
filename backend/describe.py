@@ -41,7 +41,7 @@ def get_clothing_JSON(imgUrl):
     include a couple of example occasions in which this clothing could be seen in
     (for example, "school", "work", party", "gym"). Then, output all of this as
     JSON. Example image: Image is a navy blue plain hoodie. Example output: {
-    description: "navy blue plain hoodie", type: "top" tag: ["cold", "windy",
+    description: "navy blue plain hoodie", type: "top" tags: ["cold", "windy",
     "rainy", "cool", "casual", school", "shopping", "going out", "party"] } If the
     given image is not a clothing piece, return "null" for the value of each key.
     """

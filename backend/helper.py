@@ -73,8 +73,8 @@ def upload_file(file, file_name, file_extension):
         storage_client = google.cloud.storage.Client()
         bucket = storage_client.get_bucket('bucket_of_photos')
 
-        blob = bucket.blob(file_name+file_extension)
-        blob.upload_from_file(file, content_type=f'image/{file_extension[1:]}')
+        blob = bucket.blob(file_name+".png")
+        blob.upload_from_file(file, content_type=f'image/png')
         # add_clothe("theres a froggy", "shirt", blob.public_url, 2251799813685249)
         
     except Exception as e:
