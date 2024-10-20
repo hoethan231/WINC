@@ -28,7 +28,6 @@ export default function Weather() {
             try {
                 const apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
                 const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
-                console.log("API Key: ", apiKey);
                 console.log("Fetching weather data from : ", url);
                 const response = await fetch (url);
                 if (!response.ok) {
@@ -82,7 +81,7 @@ export default function Weather() {
                         </div>
                     ) : (
                         weather && (
-                            <div className="ml-48 -mt-4">
+                            <div className="ml-56 -mt-4">
                                 <img
                                     src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                                     alt="Weather Icon"

@@ -3,10 +3,29 @@ import { SidebarContainer } from "../Components/sidebarContainer";
 import Weather from "../Components/weather";
 import { GeneratedOutfit } from "../Components/generatedOutfit";
 import { MiniWardrobe } from "../Components/miniWardrobe";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [vibe, setVibe] = useState("");
+  const [combinations, setCombinations] = useState([]);
+
+  const handleVibeChange = (newVibe: string) => {
+    setVibe(newVibe);
+  };
+
+  useEffect(() => {
+    if(vibe) {
+      axios.post("http://localhost:3000/get_combinations", { "vibe":vibe, "limit":5 })
+      .then((response) => {
+        setCombinations(response.data);
+      })
+      .catch((error) => {
+        console.log("error:" + error);
+      })
+    }
+  },[vibe]);
 
   return (
     <div className="flex">
@@ -17,7 +36,7 @@ export default function Dashboard() {
         </div>
         <div className="h-1 bg-[#39516E] mx-10 -my-3" />
         <div className="flex">
-          <GeneratedOutfit sidebarOpen={sidebarOpen} />
+          <GeneratedOutfit sidebarOpen={sidebarOpen}/>
           <div>
             <Weather />
             <MiniWardrobe />

@@ -112,6 +112,23 @@ def upload_file(file, file_name):
     except Exception as e:
         print("Error: ", e)
 
+def get_clothes(userID):
+    try:
+        conn = s2.connect(os.getenv("SSDB_URL"))
+        with conn.cursor() as cur:
+            cur.execute("SELECT descriptionn, category, imgURL FROM clothe WHERE userID = %s", (userID))
+            results = cur.fetchall()
+            json_results = []
+            for result in results:
+                json_result = {
+                    "description": result[0],
+                    "category": result[1],
+                    "imgURL": result[2]
+                }
+                json_results.append(json_result)
+            return json_results
+    except Exception as e:
+        print("Error: ", e)
 
 def rag_top_items(vibe, limit, clothing_type):
     try:
@@ -120,7 +137,7 @@ def rag_top_items(vibe, limit, clothing_type):
             search = embed(vibe)["embedding"]
 
             query = f"""
-            SELECT id, descriptionn, category, description_embedding <*> ('{search}':>VECTOR(768)) AS score 
+            SELECT imgURL, description_embedding <*> ('{search}':>VECTOR(768)) AS score
             FROM clothe
             WHERE category = "{clothing_type}"
             ORDER BY score DESC
@@ -130,9 +147,6 @@ def rag_top_items(vibe, limit, clothing_type):
             cur.execute(query)
 
             results = cur.fetchall()
-            for row in results:
-                print(f"Type: {row[2]}, Description: {row[1]}, Score: {row[3]} \n")
-
             return results
     except Exception as e:
         print("Error: ", e)
