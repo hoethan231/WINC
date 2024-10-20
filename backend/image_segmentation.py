@@ -1,12 +1,11 @@
+import io
+
 import cv2
 import mediapipe as mp
 import numpy as np
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 from PIL import Image
-import matplotlib.pyplot as plt
-import io
-
 
 VisionRunningMode = mp.tasks.vision.RunningMode
 
@@ -39,11 +38,8 @@ def crop_image(img):
         condition = category_mask == 4
         image_rgba = cv2.cvtColor(image_data, cv2.COLOR_RGB2RGBA)
         image_rgba[..., 3] = np.where(condition, 255, 0)
-        
-        Image.fromarray(image_rgba).save("output.png")
-        cropped_image = Image.fromarray(image_rgba)
 
         # Save to a BytesIO object
         img_byte_arr = io.BytesIO()
         img_byte_arr.seek(0)
-        return img_byte_arr 
+        return img_byte_arr

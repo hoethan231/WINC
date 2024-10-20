@@ -1,13 +1,14 @@
 import os
 
 import google.cloud.storage
-import helper as db
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+
+import helper as db
 from image_segmentation import crop_image
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
 
 
 @app.route("/upload_file", methods=["POST"])
