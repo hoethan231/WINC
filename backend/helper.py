@@ -3,6 +3,8 @@ import google.cloud.storage
 import singlestoredb as s2
 import hashlib
 import os
+from describe import get_clothing_JSON
+import json
 
 load_dotenv()
 
@@ -66,7 +68,7 @@ def edit_category(id, category):
             cur.execute("UPDATE clothe SET category = %s WHERE id = %s", (category, id))
     except Exception as e:
         print("Error: ", e)
-        
+
 
 def upload_file(file):
     try:
@@ -74,10 +76,12 @@ def upload_file(file):
         file_name, file_extension = os.path.splitext(file.filename)
 
         bucket = storage_client.get_bucket('bucket_of_photos')
-
-        blob = bucket.blob(file_name + file_extension)
-        blob.upload_from_string(file.read(), content_type=file.content_type)
-        # add_clothe("theres a froggy", "shirt", blob.public_url, 2251799813685249)
+        blob = bucket.blob(file_name+file_extension)
+        blob.upload_from_file(file, content_type=f'image/{file_extension[1:]}')
+        # response = get_clothing_JSON(blob.public_url)
+        # json_response = json.loads(response)
+        # description = json_response.description + " " + "tags: ".join(json_response.tag)
+        # add_clothe(description, json_response.type, blob.public_url, 2251799813685250)
         
     except Exception as e:
         print("Error: ", e)

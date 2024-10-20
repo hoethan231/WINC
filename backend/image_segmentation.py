@@ -1,3 +1,5 @@
+import io
+
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -23,9 +25,8 @@ def crop_image(img):
     # Create the image segmenter
     with vision.ImageSegmenter.create_from_options(options) as segmenter:
         # Create the MediaPipe image file that will be segmented
-        image = Image.open(img.stream)
+        image = Image.open(img)
         image = mp.Image(image_format=mp.ImageFormat.SRGB, data=np.array(image))
-        image.show
 
         # Retrieve the masks for the segmented image
         segmentation_result = segmenter.segment(image)
@@ -38,5 +39,7 @@ def crop_image(img):
         image_rgba = cv2.cvtColor(image_data, cv2.COLOR_RGB2RGBA)
         image_rgba[..., 3] = np.where(condition, 255, 0)
 
-        output_image = image_rgba
-        return output_image
+        # Save to a BytesIO object
+        img_byte_arr = io.BytesIO()
+        img_byte_arr.seek(0)
+        return img_byte_arr
