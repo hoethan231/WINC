@@ -82,7 +82,7 @@ export default function Weather() {
                         </div>
                     ) : (
                         weather && (
-                            <div className="ml-48 -mt-4">
+                            <div className="ml-56 -mt-2">
                                 <img
                                     src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                                     alt="Weather Icon"

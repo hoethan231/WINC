@@ -2,6 +2,7 @@
 import { SidebarContainer } from "../Components/sidebarContainer"
 import { ImageUpload } from "../Components/imageUpload";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function myWardrobe() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
