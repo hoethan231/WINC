@@ -43,10 +43,12 @@ interface GeneratedOutfitProps {
             sidebarOpen ? "w-[700px]" : "w-[950px]"
           } h-[600px] mt-10 ml-10`}
         >
-          {combinations && <div>
-            <img src={combinations[index][0]}/>
-            <img src={combinations[index][1]}/>
-          </div>}
+          {combinations.length > 0 && index < combinations.length && (
+            <div>
+              <img src={combinations[index][0]}/>
+              <img src={combinations[index][1]}/>
+            </div>
+          )}
 
         </Card>
         <form className={`flex ml-10 mt-3 ${sidebarOpen ? "w-[700px]" : "w-[950px]"}`}
